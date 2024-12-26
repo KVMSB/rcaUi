@@ -35,3 +35,8 @@ p {
   background: none !important;
   align-items: unset !important;
 }
+
+.MuiTab-root{
+  color: #447553 !important; 
+  font-weight: 500 !important;
+}

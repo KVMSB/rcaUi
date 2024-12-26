@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Checklist from './probable_cause';
 import { ApiCallWithLoader } from './loader';
 import Establishment from './Establishment';
+import FinalRootCause from './FinalRootCause';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -69,24 +70,27 @@ const Layout = (params) => {
           <Tab label="Conclusion" />
         </Tabs>
       </AppBar>
-      <ApiCallWithLoader loading={loading}/>
-      
-      <Box sx={{background:"rgb(247,248,249)"}}>
+      <ApiCallWithLoader loading={loading} />
+
+      <Box sx={{ background: "rgb(247,248,249)"}}>
         {/* Tab Panels */}
         <TabPanel value={tabIndex} index={0} onNext={handleNextTab}>
-        <Container fixed>
-          <EventDetailsForm />
+          <Container fixed>
+            <EventDetailsForm />
           </Container>
 
         </TabPanel>
         <TabPanel value={tabIndex} index={1} onNext={handleNextTab}>
-        <Checklist setLoading={setLoading}/>
+          <Checklist setLoading={setLoading} />
         </TabPanel>
         <TabPanel value={tabIndex} index={2} onNext={handleNextTab}>
-          <Typography><Establishment setLoading={setLoading}/></Typography>
+          <Establishment setLoading={setLoading} />
         </TabPanel>
         <TabPanel value={tabIndex} index={3} onNext={handleNextTab}>
-          <Typography>Final Root Cause Content</Typography>
+          <Container fixed>
+            <FinalRootCause />
+          </Container>
+
         </TabPanel>
         <TabPanel value={tabIndex} index={4} onNext={handleNextTab}>
           <Typography>Impact Assessment Content</Typography>
@@ -94,24 +98,24 @@ const Layout = (params) => {
         <TabPanel value={tabIndex} index={5} onNext={handleNextTab}>
           <Typography>Conclusion Content</Typography>
         </TabPanel>
-</Box>
-      <Box display="flex" justifyContent="end" pt={1} mt={1}  sx={{
-          backgroundColor: 'white',
-          boxShadow: '0px -2px 5px rgba(0, 0, 0, 0.1)',
-          padding: 2,
-          display: 'flex',
-          justifyContent: 'end',
-          zIndex: 1000,
-        }}>
-            {tabIndex < 5 ? (
-              <>
-              <Grid2 container columnSpacing={1} mr={3.5}>
-                <Grid2 size={{xs:9}}>
-                <Button variant="outlined" onClick={() => {}}>
+      </Box>
+      <Box display="flex" justifyContent="end" pt={1} mt={1} sx={{
+        backgroundColor: 'white',
+        boxShadow: '0px -2px 5px rgba(0, 0, 0, 0.1)',
+        padding: 2,
+        display: 'flex',
+        justifyContent: 'end',
+        zIndex: 1000,
+      }}>
+        {tabIndex < 5 ? (
+          <>
+            <Grid2 container columnSpacing={1} mr={3.5}>
+              <Grid2 size={{ xs: 9 }}>
+                <Button variant="outlined" onClick={() => { }}>
                   Save as Draft
                 </Button>
-                </Grid2>
-                <Grid2 size={{xs:3}}>
+              </Grid2>
+              <Grid2 size={{ xs: 3 }}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -119,20 +123,20 @@ const Layout = (params) => {
                 >
                   Next
                 </Button>
-                </Grid2>
-                </Grid2>
-              </>
-            ) : (
-              <Button
-                variant="contained"
-                color="success"
-                fullWidth
-                onClick={() => alert('Process Completed!')}
-              >
-                Completed
-              </Button>
-            )}
-          </Box>
+              </Grid2>
+            </Grid2>
+          </>
+        ) : (
+          <Button
+            variant="contained"
+            color="success"
+            fullWidth
+            onClick={() => alert('Process Completed!')}
+          >
+            Completed
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 };
