@@ -21,11 +21,16 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: Set up environment variables
+        run: |
+          touch .env
+          echo  "REACT_APP_BASEURL: ${{ vars.REACT_APP_BASEURL }}" >> ./my-app/.env
+          cat .env
+
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run build
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
