@@ -24,7 +24,7 @@ jobs:
       - name: Set up environment variables
         run: |
           touch .env
-          echo  "REACT_APP_BASEURL: ${{ vars.REACT_APP_BASEURL }}" >> ./my-app/.env
+          echo  "REACT_APP_BASEURL: ${{ vars.REACT_APP_BASEURL }}" >> .env
           cat .env
 
       - name: npm install, build, and test
