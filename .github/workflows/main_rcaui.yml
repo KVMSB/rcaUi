@@ -28,6 +28,8 @@ jobs:
           cat .env
 
       - name: npm install, build, and test
+        env:
+          CI: false
         run: |
           npm install
           CI=false npm run build
