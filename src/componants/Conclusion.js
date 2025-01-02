@@ -8,6 +8,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { conclusionSummary, trainingMaterial } from "../services/apiService";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import jsPDF from 'jspdf';
+import html2pdf from 'html2pdf.js';
 
 const Conclusion = (props) => {
     const event = useSelector(state => state.event);
@@ -24,9 +26,10 @@ const Conclusion = (props) => {
                 final_root_cause: finalRootCause[0]
             }
             conclusionSummary(req).then((res) => {
-                setHtml(res.data?.html_output);
+                let htnlstr = res.data?.html_output.replace("<p>```markdown</p>", "");
+                setHtml(htnlstr);
                 props.setLoading(false);
-            }).catch(err=>{
+            }).catch(err => {
                 console.error(err);
                 props.setLoading(false);
             })
@@ -74,6 +77,17 @@ const Conclusion = (props) => {
             console.error("Error downloading file:", error);
         });
     }
+
+    const handleDownloadPdf = () => {
+        // Create a new jsPDF instance
+        const element = document.getElementById('summary');
+        if (!element) {
+            console.error('Element not found!');
+            return;
+        }
+        html2pdf().from(element).save('rca_report.pdf')
+    };
+
     return (
         <>
             <Box sx={{ background: '#f5f5f5' }}>
@@ -104,6 +118,7 @@ const Conclusion = (props) => {
                                 padding: '8px 16px',
                                 fontWeight: 'bold',
                             }}
+                            onClick={handleDownloadPdf}
                         >
                             Download RCA Report
                         </Button>
@@ -126,7 +141,7 @@ const Conclusion = (props) => {
                         </Button>
                     </Grid>
                     <Grid size={{ xs: 9 }}>
-                        <Box p={3} pt={1} ml={1} sx={{ background: "#fff", border: '1px solid #ccc', borderRadius: 2 }}>
+                        <Box id="summary" p={3} pt={1} ml={1} sx={{ background: "#fff", border: '1px solid #ccc', borderRadius: 2 }}>
                             <div dangerouslySetInnerHTML={{ __html: html }} />
                         </Box>
                     </Grid>

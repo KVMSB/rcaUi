@@ -9,6 +9,7 @@ import Establishment from './Establishment';
 import FinalRootCause from './FinalRootCause';
 import ImpactAssessment from './ImpactAssessment';
 import Conclusion from './Conclusion';
+import { useNavigate } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,7 +33,7 @@ const Layout = (params) => {
   const [eventNum, setEventNum] = useState(params.eventNo) // Get the event number from the URL
   const eventState = useSelector((state) => state.event);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setEventNum(eventState.eventNo)
   }, [eventState])
@@ -133,7 +134,7 @@ const Layout = (params) => {
           <Button
             variant="contained"
             color="success"
-            onClick={() => alert('Process Completed!')}
+            onClick={() => navigate("/")}
           >
             Completed
           </Button>
